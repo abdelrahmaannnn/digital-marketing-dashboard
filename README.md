@@ -4,6 +4,8 @@ A Power BI dashboard (saved as a **Power BI Project, `.pbip`**) that analyzes pa
 
 The report, semantic model and every measure are stored as plain text (PBIR JSON + TMDL), so the whole dashboard can be reviewed and versioned in Git.
 
+![Digital Marketing Performance dashboard](assets/dashboard.png)
+
 ## What's on the page
 
 | Area | Visual | What it answers |
