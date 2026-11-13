@@ -1,0 +1,170 @@
+/// Central table for report measures
+table _Measures
+	lineageTag: dcdd47da-35cd-4f4c-9441-9300087206db
+
+	measure Profit = [Total Revenue] - [Total Spend]
+		formatString: $#,##0
+		displayFolder: 01 Financial
+		lineageTag: 9d523835-2ed3-4c84-9021-c6ea7f2b9ca3
+
+	measure 'ROI %' = DIVIDE([Total Revenue] - [Total Spend], [Total Spend])
+		formatString: 0.0%
+		displayFolder: 01 Financial
+		lineageTag: 079604d7-4481-4943-b55e-82c54a50cbaf
+
+	measure 'Profit Margin %' = DIVIDE([Profit], [Total Revenue])
+		formatString: 0.0%
+		displayFolder: 01 Financial
+		lineageTag: 870501ec-4437-458a-9934-7dbed3aa2a0e
+
+	measure 'Revenue per Conversion' = DIVIDE([Total Revenue], [Total Conversions])
+		formatString: $#,##0.00
+		displayFolder: 01 Financial
+		lineageTag: af466434-fb92-4261-a74b-49b2d39acfc5
+
+	measure CPC = DIVIDE([Total Spend], [Total Clicks])
+		formatString: $#,##0.00
+		displayFolder: 02 Efficiency
+		lineageTag: 034cf75a-0dab-49ab-a96b-e990eed9842c
+
+	measure CPM = DIVIDE([Total Spend], [Total Impressions]) * 1000
+		formatString: $#,##0.00
+		displayFolder: 02 Efficiency
+		lineageTag: 371a63bc-34d8-4394-8513-13c3b4846437
+
+	measure 'Conversion Rate' = DIVIDE([Total Conversions], [Total Clicks])
+		formatString: 0.00%
+		displayFolder: 02 Efficiency
+		lineageTag: 02c7ea6c-1262-40c7-8302-45ebc68a5c74
+
+	measure 'Avg Frequency' = DIVIDE([Total Impressions], [Total Reach])
+		formatString: 0.00
+		displayFolder: 02 Efficiency
+		lineageTag: 21a86892-1763-4e36-b82c-511593821844
+
+	measure 'Video View Rate' = DIVIDE([Total Video Views], [Total Impressions])
+		formatString: 0.00%
+		displayFolder: 02 Efficiency
+		lineageTag: b688cd57-d1ee-4ebc-bc42-8269e4694230
+
+	measure 'Ads Count' = DISTINCTCOUNT(digital_marketing_clean[ad_id])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: 03d840fa-1645-4ebd-b12a-02488516f092
+
+	measure 'Countries Count' = DISTINCTCOUNT(digital_marketing_clean[country])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: 4a89f554-abf0-4c09-9043-c9019cf23326
+
+	measure 'Revenue PY' = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR('Calendar'[Date]))
+		formatString: $#,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 6355962b-bc46-456c-b68b-fe4437d8ea0c
+
+	measure 'Revenue YoY %' = DIVIDE([Total Revenue] - [Revenue PY], [Revenue PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 04 Time Intelligence
+		lineageTag: bdb26b5a-7ec6-4b3a-9cb0-402aba024734
+
+	measure 'Spend PY' = CALCULATE([Total Spend], SAMEPERIODLASTYEAR('Calendar'[Date]))
+		formatString: $#,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 7586f9ed-d46a-4c0d-bcca-9dbb315320b8
+
+	measure 'Spend YoY %' = DIVIDE([Total Spend] - [Spend PY], [Spend PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 04 Time Intelligence
+		lineageTag: 0cbc59af-aa33-4c81-be1c-293547efe2cf
+
+	measure 'Conversions PY' = CALCULATE([Total Conversions], SAMEPERIODLASTYEAR('Calendar'[Date]))
+		formatString: #,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 9648f821-fc0b-4eb3-8376-6c26f362fe43
+
+	measure 'Conversions YoY %' = DIVIDE([Total Conversions] - [Conversions PY], [Conversions PY])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 04 Time Intelligence
+		lineageTag: 9e32dfb3-1022-4f9c-837a-1abf181f6d0f
+
+	measure 'ROAS PY' = CALCULATE([ROAS], SAMEPERIODLASTYEAR('Calendar'[Date]))
+		formatString: 0.00x
+		displayFolder: 04 Time Intelligence
+		lineageTag: 20071795-e0fd-48c6-b34f-3ae9259be1be
+
+	measure 'Revenue YTD' = TOTALYTD([Total Revenue], 'Calendar'[Date])
+		formatString: $#,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 55c0aed1-489b-462b-af93-fe3ce9e9c242
+
+	measure 'Spend YTD' = TOTALYTD([Total Spend], 'Calendar'[Date])
+		formatString: $#,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: fbe970f9-6dc3-4a42-80aa-891fb4036f4e
+
+	measure 'Revenue Rolling 3M' = CALCULATE([Total Revenue], DATESINPERIOD('Calendar'[Date], MAX('Calendar'[Date]), -3, MONTH))
+		formatString: $#,##0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 12f1855d-5eb2-4847-b200-d325eac37b66
+
+	measure 'Top Platform' = FIRSTNONBLANK(TOPN(1, VALUES(digital_marketing_clean[platform]), [Total Revenue], DESC), 1)
+		displayFolder: 05 Labels
+		lineageTag: 05b7c179-bd25-4440-ba73-d7c785113300
+
+	measure 'Top Country' = FIRSTNONBLANK(TOPN(1, VALUES(digital_marketing_clean[country]), [Total Revenue], DESC), 1)
+		displayFolder: 05 Labels
+		lineageTag: b9391f0c-b041-498a-92f2-fcbc5cd43071
+
+	measure 'Revenue YoY Color' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Revenue], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Revenue], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = cur - prev RETURN IF(ISBLANK(prev) || ISBLANK(cur), "#8592AD", IF(d >= 0, "#22C55E", "#EF4444"))
+		displayFolder: 06 Formatting
+		lineageTag: 89670ce4-0112-425a-a633-dd4d0e70145a
+
+	measure 'ROAS Color' = SWITCH(TRUE(), [ROAS] >= 1.15, "#22C55E", [ROAS] >= 1, "#F59E0B", "#EF4444")
+		displayFolder: 06 Formatting
+		lineageTag: 7a903e6b-183e-46fc-aaab-4c9e9e84da52
+
+	measure 'Revenue YoY Arrow' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Revenue], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Revenue], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = DIVIDE(cur - prev, prev) RETURN IF(ISBLANK(prev) || ISBLANK(cur), "No prior year", IF(d >= 0, UNICHAR(9650), UNICHAR(9660)) & " " & FORMAT(ABS(d), "0.0%") & "  " & y & " vs " & (y - 1))
+		displayFolder: 05 Labels
+		lineageTag: 9bca6f9e-69d0-43a2-a9fd-eccef03cdd52
+
+	measure 'ROAS YoY Arrow' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([ROAS], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([ROAS], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = cur - prev RETURN IF(ISBLANK(prev) || ISBLANK(cur), "No prior year", IF(d >= 0, UNICHAR(9650), UNICHAR(9660)) & " " & FORMAT(ABS(d), "0.00") & "x  " & y & " vs " & (y - 1))
+		displayFolder: 05 Labels
+		lineageTag: 8b3a62a4-c226-46da-ad07-84d365f7ca7f
+
+	measure 'Spend YoY Arrow' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Spend], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Spend], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = DIVIDE(cur - prev, prev) RETURN IF(ISBLANK(prev) || ISBLANK(cur), "No prior year", IF(d >= 0, UNICHAR(9650), UNICHAR(9660)) & " " & FORMAT(ABS(d), "0.0%") & "  " & y & " vs " & (y - 1))
+		displayFolder: 05 Labels
+		lineageTag: 75b74902-6033-46f9-86e5-10d220617b1a
+
+	measure 'Conversions YoY Arrow' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Conversions], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Conversions], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = DIVIDE(cur - prev, prev) RETURN IF(ISBLANK(prev) || ISBLANK(cur), "No prior year", IF(d >= 0, UNICHAR(9650), UNICHAR(9660)) & " " & FORMAT(ABS(d), "0.0%") & "  " & y & " vs " & (y - 1))
+		displayFolder: 05 Labels
+		lineageTag: 7e8dd4fc-433d-420a-a821-c83ea4522e7d
+
+	measure 'Profit Subtitle' = "Margin " & FORMAT([Profit Margin %], "0.0%") & "  |  ROI " & FORMAT([ROI %], "0.0%")
+		displayFolder: 05 Labels
+		lineageTag: 6e56e0bf-34b7-465d-9d39-c5c0866d0673
+
+	measure 'CTR Subtitle' = "CPC " & FORMAT([CPC], "$0.00") & "  |  CPM " & FORMAT([CPM], "$0.00")
+		displayFolder: 05 Labels
+		lineageTag: 59d6c8c3-1ea8-41ef-a34d-9e00f9dc3011
+
+	measure 'Spend YoY Color' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Spend], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Spend], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = cur - prev RETURN IF(ISBLANK(prev) || ISBLANK(cur), "#8592AD", IF(d <= 0, "#22C55E", "#EF4444"))
+		displayFolder: 06 Formatting
+		lineageTag: 2a55aaeb-6b0f-44e3-bbd1-e55aa362f49f
+
+	measure 'Conversions YoY Color' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([Total Conversions], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([Total Conversions], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = cur - prev RETURN IF(ISBLANK(prev) || ISBLANK(cur), "#8592AD", IF(d >= 0, "#22C55E", "#EF4444"))
+		displayFolder: 06 Formatting
+		lineageTag: ea0185ae-0569-4a76-a59d-0c38652d3b38
+
+	measure 'ROAS YoY Color' = VAR y = MAX('Calendar'[Year]) VAR cur = CALCULATE([ROAS], 'Calendar'[Year] = y, REMOVEFILTERS('Calendar'[Date], 'Calendar'[Month Number], 'Calendar'[Month Name], 'Calendar'[Year Month], 'Calendar'[Quarter])) VAR prev = CALCULATE([ROAS], 'Calendar'[Year] = y - 1, REMOVEFILTERS('Calendar')) VAR d = cur - prev RETURN IF(ISBLANK(prev) || ISBLANK(cur), "#8592AD", IF(d >= 0, "#22C55E", "#EF4444"))
+		displayFolder: 06 Formatting
+		lineageTag: 66c2ff84-2dcd-46da-b7c0-6881ff28a279
+
+	column _
+		lineageTag: 162fbe89-87e3-499a-930e-5912b2b9e222
+		isNameInferred
+		sourceColumn: [_]
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW("_", BLANK())
+

@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DataFilePath","digital_marketing_clean"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table digital_marketing_clean
+ref table DateTableTemplate_b14e2749-8fae-4946-9d30-e673e385535a
+ref table LocalDateTable_7e39a0ff-5540-425a-b444-0320a012a7d3
+ref table Calendar
+ref table _Measures
+
+ref cultureInfo en-US
+

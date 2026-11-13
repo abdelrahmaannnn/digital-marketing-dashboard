@@ -1,0 +1,9 @@
+relationship bde72895-b197-4e14-9edb-6d62459086ca
+	joinOnDateBehavior: datePartOnly
+	fromColumn: digital_marketing_clean.date
+	toColumn: LocalDateTable_7e39a0ff-5540-425a-b444-0320a012a7d3.Date
+
+relationship Relationship
+	fromColumn: digital_marketing_clean.date
+	toColumn: Calendar.Date
+

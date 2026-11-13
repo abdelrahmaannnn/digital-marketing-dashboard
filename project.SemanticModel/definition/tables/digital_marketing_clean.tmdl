@@ -1,0 +1,317 @@
+table digital_marketing_clean
+	lineageTag: 7adb8cf5-eb68-48e2-8f5c-dce62d5db8a1
+
+	measure 'Total Spend' =
+			
+			SUM(digital_marketing_clean[spend])
+		formatString: $#,##0
+		displayFolder: 01 Financial
+		lineageTag: 12b2392e-e157-457b-96ce-d2090557953a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d1d0604f-13d8-4165-b2eb-0beee985e29e
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: bde72895-b197-4e14-9edb-6d62459086ca
+			defaultHierarchy: LocalDateTable_7e39a0ff-5540-425a-b444-0320a012a7d3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: d0d8c07f-fa20-4eb0-8eb1-d947a6a14f35
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a93d501-7cd7-4050-b12f-ec63ce22f272
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 0e77b5eb-53c9-4e57-9119-a22a63f4098d
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column week
+		dataType: int64
+		formatString: 0
+		lineageTag: b1bef890-f111-4f1b-9c9e-1740685dfe14
+		summarizeBy: sum
+		sourceColumn: week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: string
+		lineageTag: 2311f356-c358-4ed5-a6a1-63abd09b54d8
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f435ffc8-0fcc-4d0c-b790-3e1d1ee8478e
+		summarizeBy: sum
+		sourceColumn: post_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column season
+		dataType: string
+		lineageTag: 8e8b01d6-1233-44e6-afa2-717a2b68fc45
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_holiday
+		dataType: int64
+		formatString: 0
+		lineageTag: e841ae18-5988-44db-a422-52f55e4ac28f
+		summarizeBy: sum
+		sourceColumn: is_holiday
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: int64
+		formatString: 0
+		lineageTag: 5608b2a4-2dbd-4df7-81dd-a3b2c6371460
+		summarizeBy: sum
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 4eeeb2ee-ce0e-4812-80ea-34167f18b461
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column market_tier
+		dataType: string
+		lineageTag: afe0feed-b17a-4479-90a3-5bad5ccc6d66
+		summarizeBy: none
+		sourceColumn: market_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column account
+		dataType: string
+		lineageTag: 2398b0f0-a6dd-47e2-b1d3-000d99d714af
+		summarizeBy: none
+		sourceColumn: account
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_type
+		dataType: string
+		lineageTag: 0e603f75-8084-40da-9e1e-ad4c92dab6dd
+		summarizeBy: none
+		sourceColumn: account_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column platform
+		dataType: string
+		lineageTag: ec982f62-df1f-4120-b2a5-2e05de186044
+		summarizeBy: none
+		sourceColumn: platform
+
+		annotation SummarizationSetBy = Automatic
+
+	column placement
+		dataType: string
+		lineageTag: 0ca7c79a-e47a-4ea2-8ef2-4ceb27e13311
+		summarizeBy: none
+		sourceColumn: placement
+
+		annotation SummarizationSetBy = Automatic
+
+	column funnel_stage
+		dataType: string
+		lineageTag: f1ca6ace-c4c4-4872-881a-6b3278bead45
+		summarizeBy: none
+		sourceColumn: funnel_stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column objective
+		dataType: string
+		lineageTag: ab8cda2d-5a00-4c4a-b12d-8e09e8d1eefc
+		summarizeBy: none
+		sourceColumn: objective
+
+		annotation SummarizationSetBy = Automatic
+
+	column theme
+		dataType: string
+		lineageTag: d7e036de-4b98-4dd0-b21d-6067f81fbf86
+		summarizeBy: none
+		sourceColumn: theme
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_id
+		dataType: string
+		lineageTag: 81524c1d-76f5-4b12-bbc0-319c54254318
+		summarizeBy: none
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: 5dbda723-294c-4f71-9686-080bd00915fb
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ad_group_id
+		dataType: string
+		lineageTag: b83cdf14-c683-4de1-bddb-58ee021df8f8
+		summarizeBy: none
+		sourceColumn: ad_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ad_group_name
+		dataType: string
+		lineageTag: 62a9ff0b-203c-4ea4-88cf-0a4393ab7358
+		summarizeBy: none
+		sourceColumn: ad_group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ad_id
+		dataType: string
+		lineageTag: d190b0d5-4eca-4509-b67d-6bb8ea9036db
+		summarizeBy: none
+		sourceColumn: ad_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ad_name
+		dataType: string
+		lineageTag: e7335c7e-b952-43fb-82c2-02776d8d6067
+		summarizeBy: none
+		sourceColumn: ad_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column spend
+		dataType: double
+		lineageTag: 70b288fb-b8f4-4a48-9068-a1cc33bce16d
+		summarizeBy: sum
+		sourceColumn: spend
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column impressions
+		dataType: int64
+		formatString: 0
+		lineageTag: ac4a652b-7c26-4b6d-a366-3ed589c87c38
+		summarizeBy: sum
+		sourceColumn: impressions
+
+		annotation SummarizationSetBy = Automatic
+
+	column reach
+		dataType: int64
+		formatString: 0
+		lineageTag: 4bbc68d6-1296-48e5-b26b-bc8fbc98e4cb
+		summarizeBy: sum
+		sourceColumn: reach
+
+		annotation SummarizationSetBy = Automatic
+
+	column frequency
+		dataType: double
+		lineageTag: 7e204abc-2dd1-4325-a04c-fee5a3603f3c
+		summarizeBy: sum
+		sourceColumn: frequency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column clicks
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c24c281-7d5d-4452-a2d5-31c3be7a503f
+		summarizeBy: sum
+		sourceColumn: clicks
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversions
+		dataType: int64
+		formatString: 0
+		lineageTag: 53ecdfc3-a380-4932-a95d-cb9a47849e09
+		summarizeBy: sum
+		sourceColumn: conversions
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: ecb59f24-0e19-408e-ae9a-a660260ae44d
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column video_views
+		dataType: int64
+		formatString: 0
+		lineageTag: b2d2a6b5-cd8d-4eea-9813-1bae88eeef28
+		summarizeBy: sum
+		sourceColumn: video_views
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Funnel Order' = SWITCH(digital_marketing_clean[funnel_stage], "Awareness", 1, "Consideration", 2, "Conversion", 3, 4)
+		dataType: int64
+		lineageTag: e4c59c91-9870-4f59-ad05-03e6a282071f
+
+	partition digital_marketing_clean = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFilePath), [Delimiter = ",", Columns = 33, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"date", type date}, {"year", Int64.Type}, {"month", Int64.Type}, {"month_name", type text}, {"week", Int64.Type}, {"day_of_week", type text}, {"post_hour", Int64.Type}, {"season", type text}, {"is_holiday", Int64.Type}, {"is_weekend", Int64.Type}, {"country", type text}, {"market_tier", type text}, {"account", type text}, {"account_type", type text}, {"platform", type text}, {"placement", type text}, {"funnel_stage", type text}, {"objective", type text}, {"theme", type text}, {"campaign_id", type text}, {"campaign_name", type text}, {"ad_group_id", type text}, {"ad_group_name", type text}, {"ad_id", type text}, {"ad_name", type text}, {"spend", type number}, {"impressions", Int64.Type}, {"reach", Int64.Type}, {"frequency", type number}, {"clicks", Int64.Type}, {"conversions", Int64.Type}, {"revenue", type number}, {"video_views", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,6 @@
+/// Full path to data\digital_marketing_clean.csv. Change it in Power BI: Transform data > Manage parameters.
+expression DataFilePath = "C:\Users\owner\Downloads\digital-marketing-dashboard\data\digital_marketing_clean.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 5b8f2c1e-7a4d-4e3b-9c61-2f0d8e4a7b19
+
+	annotation PBI_ResultType = Text
+

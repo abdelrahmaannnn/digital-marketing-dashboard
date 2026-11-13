@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  :root {
+    --bg: #0A1020; --panel: #111A2E; --panel-2: #0E1628; --line: #1F2A44;
+    --text: #E6ECF7; --muted: #8592AD; --accent: #6366F1; --accent-2: #22D3EE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; }
+  body {
+    font-family: 'Inter', 'Segoe UI', sans-serif; color: var(--text);
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(99,102,241,.18), transparent 60%),
+      radial-gradient(700px 400px at 30% 110%, rgba(34,211,238,.10), transparent 60%),
+      var(--bg);
+    position: relative;
+  }
+  .abs { position: absolute; }
+  .sidebar {
+    background: linear-gradient(180deg, #0D1530 0%, #0A1124 100%);
+    border-right: 1px solid var(--line);
+  }
+  .brand { left: 16px; top: 20px; display: flex; align-items: center; gap: 10px; }
+  .brand .badge {
+    width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #6366F1, #22D3EE); box-shadow: 0 6px 18px rgba(99,102,241,.35);
+  }
+  .brand .name { font-weight: 700; font-size: 16px; letter-spacing: .2px; }
+  .brand .sub { font-size: 10px; color: var(--muted); letter-spacing: 1.4px; text-transform: uppercase; margin-top: 2px; }
+  .side-title { left: 16px; top: 88px; display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1.6px; text-transform: uppercase; }
+  .side-title::after { content: ''; display: block; width: 86px; height: 1px; background: var(--line); margin-left: 4px; }
+  .slot-label { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: #C3CCE0; }
+  .slot { border-radius: 9px; background: var(--panel-2); border: 1px solid var(--line); }
+  .footer { left: 16px; bottom: 18px; width: 164px; font-size: 10px; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--line); padding-top: 10px; }
+  .header { display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -.2px; }
+  .header p { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .chip { font-size: 11px; color: #C7D2FE; background: rgba(99,102,241,.14); border: 1px solid rgba(99,102,241,.35); padding: 6px 12px; border-radius: 999px; display: flex; gap: 6px; align-items: center; }
+  .card {
+    border-radius: 14px; background: linear-gradient(180deg, #131D33 0%, #0F182B 100%);
+    border: 1px solid var(--line); overflow: hidden;
+  }
+  .card .bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .card .ic { position: absolute; left: 14px; top: 14px; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; }
+  .card .lb { position: absolute; left: 54px; top: 22px; font-size: 11.5px; font-weight: 600; color: #AEB9D1; letter-spacing: .3px; }
+  .card .glow { position: absolute; right: -30px; top: -30px; width: 100px; height: 100px; border-radius: 50%; filter: blur(30px); opacity: .22; }
+  .panel { border-radius: 14px; background: linear-gradient(180deg, #121B30 0%, #0F172A 100%); border: 1px solid var(--line); }
+  .panel .hd { position: absolute; left: 14px; top: 12px; display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; }
+  .panel .hd .ic { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: rgba(99,102,241,.16); }
+  .panel .sep { position: absolute; left: 14px; right: 14px; top: 44px; height: 1px; background: var(--line); }
+</style>
+<script src="icons.js"></script>
+<script src="layout.js"></script>
+</head>
+<body>
+<script>
+  const L = window.LAYOUT, b = document.body;
+  const add = (html) => b.insertAdjacentHTML('beforeend', html);
+  const box = (o) => `left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px;`;
+  const hex2rgba = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`; };
+
+  // Sidebar
+  add(`<div class="abs sidebar" style="${box(L.sidebar)}"></div>`);
+  add(`<div class="abs brand"><div class="badge">${icon('logo', 20, '#fff', 2.4)}</div>
+       <div><div class="name">MarketPulse</div><div class="sub">Ads Analytics</div></div></div>`);
+  add(`<div class="abs side-title">${icon('filter', 13, '#8592AD', 2.4)}Filters</div>`);
+  L.slicers.forEach(s => {
+    add(`<div class="abs slot-label" style="left:${s.x}px;top:${s.y - 22}px">${icon(s.icon, 14, '#818CF8', 2.2)}${s.label}</div>`);
+    add(`<div class="abs slot" style="${box(s)}"></div>`);
+  });
+  add(`<div class="abs footer">Source: digital_marketing_clean<br>Period: Jan 2023 – Dec 2025</div>`);
+
+  // Header
+  add(`<div class="abs header" style="${box(L.header)}">
+        <div><h1>Digital Marketing Performance</h1><p>Spend, revenue and efficiency across platforms, markets and campaigns</p></div>
+        <div class="chip">${icon('calendar', 13, '#C7D2FE', 2.2)}2023 – 2025 · 7 platforms · 15 markets</div>
+      </div>`);
+
+  // KPI cards
+  L.kpis.forEach(k => {
+    add(`<div class="abs card" style="${box(k)}">
+           <div class="glow" style="background:${k.color}"></div>
+           <div class="bar" style="background:${k.color}"></div>
+           <div class="ic" style="background:${hex2rgba(k.color, .15)};border:1px solid ${hex2rgba(k.color, .35)}">${icon(k.key, 18, k.color, 2.2)}</div>
+           <div class="lb">${k.label}</div>
+         </div>`);
+  });
+
+  // Chart panels
+  L.panels.forEach(p => {
+    add(`<div class="abs panel" style="${box(p)}">
+           <div class="hd"><div class="ic">${icon(p.icon, 14, '#A5B4FC', 2.2)}</div>${p.title}</div>
+           <div class="sep"></div>
+         </div>`);
+  });
+</script>
+</body>
+</html>

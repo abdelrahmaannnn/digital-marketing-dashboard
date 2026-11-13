@@ -1,0 +1,178 @@
+table Calendar
+	lineageTag: d4d63adf-1b85-4fb2-b283-559aa1def1a8
+	dataCategory: Time
+
+	measure 'Total Revenue' =
+			
+			SUM(digital_marketing_clean[revenue])
+		formatString: $#,##0
+		displayFolder: 01 Financial
+		lineageTag: 26198183-e54c-4350-99bb-047ff9f887ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Impressions' =
+			
+			SUM(digital_marketing_clean[impressions])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: 61b0072b-bf71-4a2b-8a30-2e98008bf4a9
+
+	measure 'Total Reach' =
+			
+			SUM(digital_marketing_clean[reach])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: e90a6f89-1e00-4be1-b612-d785063c5d6c
+
+	measure 'Total Clicks' =
+			
+			SUM(digital_marketing_clean[clicks])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: d43160c1-a1c2-4118-8b67-1e14aba7da2d
+
+	measure 'Total Conversions' =
+			
+			SUM(digital_marketing_clean[conversions])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: 83b62c16-77c2-4b71-8d7e-e138da3952ec
+
+	measure 'Total Video Views' =
+			
+			SUM(digital_marketing_clean[video_views])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: 8e2a5c6c-7402-4093-920d-1975a5395225
+
+	measure 'Campaign Count' =
+			
+			DISTINCTCOUNT(digital_marketing_clean[campaign_id])
+		formatString: #,##0
+		displayFolder: 03 Volume
+		lineageTag: c1dc47cc-454d-463c-99c8-687582f66753
+
+	measure CTR =
+			
+			DIVIDE(
+			    [Total Clicks],
+			    [Total Impressions],
+			    0
+			)
+		formatString: 0.00%
+		displayFolder: 02 Efficiency
+		lineageTag: 9e1fd808-4272-46ef-8e14-45e934937037
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ROAS =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    [Total Spend],
+			    0
+			)
+		formatString: 0.00x
+		displayFolder: 01 Financial
+		lineageTag: 6eed4ded-0583-4c37-8350-077db6a3434f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cost Per Conversion' =
+			
+			DIVIDE(
+			    [Total Spend],
+			    [Total Conversions],
+			    0
+			)
+		formatString: $#,##0.00
+		displayFolder: 02 Efficiency
+		lineageTag: 061e5678-56ed-48e9-a932-d328204e3e8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clicks per Conversion' =
+			
+			DIVIDE(
+			    [Total Clicks],
+			    [Total Conversions],
+			    0
+			)
+		formatString: 0.0
+		displayFolder: 02 Efficiency
+		lineageTag: 628e9ba3-606a-416a-80ca-9c7a9d6ebbd0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		isKey
+		lineageTag: 949a085b-eb89-4913-8a1e-83f932859ba5
+		isNameInferred
+		sourceColumn: [Date]
+
+	column Year
+		lineageTag: 70979b6a-ea04-42fe-9f1f-2f6fc8191748
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Month Number'
+		lineageTag: 7fa7e462-4511-4ca2-8e91-21bf7e823ce5
+		isNameInferred
+		sourceColumn: [Month Number]
+
+	column 'Month Name'
+		lineageTag: 25644e7e-faa6-49bb-b41d-13afc791dd54
+		isNameInferred
+		sourceColumn: [Month Name]
+
+	column 'Year Month'
+		lineageTag: 4c431919-d9ff-4f09-9ffe-a3f69257f1c4
+		isNameInferred
+		sourceColumn: [Year Month]
+
+	column Quarter
+		lineageTag: 1a0b6c61-f115-438c-8d3d-7f9734a4a230
+		isNameInferred
+		sourceColumn: [Quarter]
+
+	column Day
+		lineageTag: 836a4f70-f542-481c-b6e9-0274a08bf81b
+		isNameInferred
+		sourceColumn: [Day]
+
+	column 'Day of Week'
+		lineageTag: cd01844c-2d4b-4b7c-b106-3bdb26f2707d
+		isNameInferred
+		sourceColumn: [Day of Week]
+
+	column 'Day of Week Number'
+		lineageTag: e3685cd8-5a19-4089-a073-d0728c458959
+		isNameInferred
+		sourceColumn: [Day of Week Number]
+
+	column 'Month Start' = DATE('Calendar'[Year], 'Calendar'[Month Number], 1)
+		dataType: dateTime
+		lineageTag: 4968de8a-0b04-4cab-8ec5-6517bc19bfd2
+
+	partition Calendar = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(
+				        MIN(digital_marketing_clean[date]),
+				        MAX(digital_marketing_clean[date])
+				    ),
+				    "Year", YEAR([Date]),
+				    "Month Number", MONTH([Date]),
+				    "Month Name", FORMAT([Date], "MMM"),
+				    "Year Month", FORMAT([Date], "YYYY-MM"),
+				    "Quarter", "Q" & FORMAT([Date], "Q"),
+				    "Day", DAY([Date]),
+				    "Day of Week", FORMAT([Date], "dddd"),
+				    "Day of Week Number", WEEKDAY([Date], 2)
+				)
+
+	annotation PBI_Id = 15ace28d556a477cae8c48f65406ffae
+
