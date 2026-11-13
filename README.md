@@ -6,6 +6,12 @@ The report, semantic model and every measure are stored as plain text (PBIR JSON
 
 ![Digital Marketing Performance dashboard](assets/dashboard.png)
 
+## Data preparation (Python)
+
+The raw data was cleaned in Python before loading into Power BI. The notebook produces `data/digital_marketing_clean.csv`.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1szSLIWF-6EAwi2bNGrLC0BkUCF-iO-hZ)
+
 ## What's on the page
 
 | Area | Visual | What it answers |
