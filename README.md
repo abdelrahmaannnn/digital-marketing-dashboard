@@ -8,9 +8,21 @@ The report, semantic model and every measure are stored as plain text (PBIR JSON
 
 ## Data preparation (Python)
 
-The raw data was cleaned in Python before loading into Power BI. The notebook produces `data/digital_marketing_clean.csv`.
+The raw data (30,300 rows, 35 columns) was cleaned in Python with pandas before loading into Power BI. The notebook [`notebooks/data_cleaning.ipynb`](notebooks/data_cleaning.ipynb) produces `data/digital_marketing_clean.csv` (29,775 rows, 33 columns).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1szSLIWF-6EAwi2bNGrLC0BkUCF-iO-hZ)
+
+Cleaning steps:
+
+1. **Duplicates and redundant columns:** drop duplicate rows and the text copies of `is_holiday` / `is_weekend`; trim whitespace in all text columns.
+2. **Standardize categories:** unify country names (`ksa` → `KSA`, `uae` → `United Arab Emirates`, ...), title-case tier/stage/objective fields, and merge platform variants (`Instagram`/`Facebook` → `Meta`, `Tik Tok` → `TikTok`, ...).
+3. **Numeric fields:** strip currency symbols and text from spend, impressions, clicks and revenue; convert EGP amounts to USD (assumed rate 1 USD = 50 EGP).
+4. **Dates:** parse mixed formats (`YYYY-MM-DD`, `DD/MM/YYYY`, `MM/DD/YYYY`), drop rows with no valid date, and rebuild year, month, week, weekday and weekend flags from the clean date.
+5. **Outliers and invalid values:** set negatives, placeholder values (9,999,999) and impossible values to missing (reach ≥ 100M, conversions ≥ 100K, post hour outside 0–23, frequency outside 0–100, reach > impressions).
+6. **Missing labels:** fill missing country, platform, account and campaign name with `Unknown`.
+7. **Recalculate** frequency as impressions ÷ reach.
+
+The raw file (`digital_marketing_dataset_dirty.csv`) is not included in this repository.
 
 ## What's on the page
 
@@ -56,6 +68,7 @@ project.pbip                 Entry point, open this in Power BI Desktop
 project.Report/              Report definition (PBIR): pages, visuals, theme, background
 project.SemanticModel/       Semantic model (TMDL): tables, relationships, measures
 data/                        Source data (CSV)
+notebooks/                   Python data-cleaning notebook
 assets/                      Design source files
   background.png             Page background (3840x2160)
   MarketPulse_theme.json     Report theme
